@@ -56,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(sp.getBoolean("isFirstOpen",true)){
-                    sp.edit().putBoolean("isFirstOpen",false).commit();
+
                     startActivity(new Intent(SplashActivity.this, WelcomeActivity.class));
                     finish();
                 }else{

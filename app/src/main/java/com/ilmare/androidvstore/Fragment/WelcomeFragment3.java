@@ -17,13 +17,7 @@ import com.ilmare.androidvstore.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by zhangchenggeng
- * Time 5/7/2016 4:29 PM.
- * Descripton:
- * History:
- * 版权所有
- */
+
 public class WelcomeFragment3 extends Fragment {
 
     @InjectView(R.id.enter_homePage)
@@ -40,6 +34,12 @@ public class WelcomeFragment3 extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
+
+                getActivity()
+                        .getSharedPreferences("config",Context.MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("isFirstOpen",false)
+                        .commit();
             }
         });
         return view;
