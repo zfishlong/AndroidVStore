@@ -29,11 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.inject(this);
 
-
         viewPager.setAdapter(new WelcomeViewPager(getSupportFragmentManager()));
-
-
-
     }
 
 
@@ -56,7 +52,6 @@ public class WelcomeActivity extends AppCompatActivity {
         public int getCount() {
             return fragments.size();
         }
-
 
     }
 

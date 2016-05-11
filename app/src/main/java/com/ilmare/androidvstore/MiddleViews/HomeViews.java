@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -47,7 +48,7 @@ public class HomeViews {
 
     private View rootView;
     private Context context;
-
+    private List<ImageView> imageViews;
     private static int[] resID = new int[]{R.mipmap.i1, R.mipmap.i2,
             R.mipmap.i3, R.mipmap.i4, R.mipmap.i5};
 
@@ -55,15 +56,15 @@ public class HomeViews {
             R.mipmap.home_classify_02, R.mipmap.home_classify_03,
             R.mipmap.home_classify_04, R.mipmap.home_classify_05};
 
-
+    private boolean isStop=false;
 
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            llPoints.getChildAt(currentPosition%resID.length).setEnabled(false);
-            viewpager.setCurrentItem(currentPosition++);
-            llPoints.getChildAt(currentPosition%resID.length).setEnabled(true);
-            handler.sendEmptyMessageDelayed(0,3000);
+            viewpager.setCurrentItem(currentPosition+1);
+            if(!isStop){
+                handler.sendEmptyMessageDelayed(0,3000);
+            }
         }
     };
 
@@ -75,8 +76,6 @@ public class HomeViews {
 
     public HomeViews(Context context) {
         this(View.inflate(context, R.layout.home_activity, null),context);
-
-
     }
 
 
@@ -92,16 +91,36 @@ public class HomeViews {
         //初始化ViewPager
         viewpager.setAdapter(new MyHomeAdapter());
 
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                llPoints.getChildAt(currentPosition%resID.length).setEnabled(false);
+                llPoints.getChildAt(position%resID.length).setEnabled(true);
+                currentPosition=position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        initPoint();
         currentPosition = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2) % resID.length;
         viewpager.setCurrentItem(currentPosition);
 
-        initPoint();
+
 
         handler.sendEmptyMessageDelayed(0, 3000);
 
         //初始化ListView
         custonInfoListView.setAdapter(new MyHomeListAdapter());
-
 
         custonInfoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,6 +160,18 @@ public class HomeViews {
 
 
     private void initPoint() {
+
+        imageViews = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            ImageView imageView = new ImageView(context);
+            imageView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+            imageView.setBackgroundResource(resID[i]);
+            imageViews.add(imageView);
+        }
+
+
+
+
         List<View> list = new ArrayList<View>();
 
         for (int i = 0; i < 5; i++) {
@@ -180,11 +211,9 @@ public class HomeViews {
         //创建对象时调用
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ImageView imageView = new ImageView(context);
-            imageView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-            imageView.setBackgroundResource(resID[position % resID.length]);
+            ImageView imageView=imageViews.get(position % resID.length);
             container.addView(imageView);
-            return imageView;
+            return imageViews.get(position % resID.length);
         }
 
         //销毁对象时调用
@@ -192,6 +221,8 @@ public class HomeViews {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+
+
     }
 
     private class MyHomeListAdapter extends BaseAdapter{
