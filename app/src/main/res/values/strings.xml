@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">AndroidVStore</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="search_hint">查找商品</string>
+    <string name="shoppingcart">购物车</string>
+    <string name="my_account_title">我的账户</string>
+    <string name="my_ordr_title">我的订单</string>
+    <string name="address_manage_title">地址管理</string>
+    <string name="my_favorite_title">收藏夹</string>
+    <string name="recent_browse_title">浏览历史</string>
+    <string name="help_title">帮助中心</string>
+    <string name="userfeedback">用户反馈</string>
+    <string name="about_title">关于我们</string>
+    <string name="htome_title">首页</string>
+    <string name="sales">销量</string>
+    <string name="price">价格</string>
+    <string name="goodDegree">好评度</string>
+    <string name="groundingTime">发布时间</string>
+    <string name="no_information">没有商品信息</string>
+    <string name="shopcar">加入购物车</string>
+    <string name="collect">收藏</string>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/home_backgroud"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linRank"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/segment_bg"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:textSize="13sp"
+            android:textColor="#4B4B4B"
+            android:textStyle="bold"
+            android:id="@+id/textRankSale"
+            android:layout_width="60.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_selected_1_bg"
+            android:gravity="center"
+            android:text="@string/sales" />
+
+        <TextView
+            android:id="@+id/textRankPrice"
+
+            android:textSize="13sp"
+            android:textColor="#4B4B4B"
+            android:textStyle="bold"
+            android:layout_width="60.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_normal_2_bg"
+            android:gravity="center"
+            android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/textRankGood"
+            android:textSize="13sp"
+            android:textColor="#4B4B4B"
+            android:textStyle="bold"
+            android:layout_width="60.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_normal_2_bg"
+            android:gravity="center"
+            android:text="@string/goodDegree" />
+
+        <TextView
+            android:id="@+id/textRankTime"
+            android:textSize="13sp"
+            android:textColor="#4B4B4B"
+            android:textStyle="bold"
+            android:layout_width="60.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_normal_3_bg"
+            android:gravity="center"
+            android:text="@string/groundingTime" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/productViewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2">
+    </ListView>
+    
+ 	<TextView
+        android:id="@+id/categoryEmptyListTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_information"
+        android:visibility="invisible" />
+   
+    <TextView
+        android:id="@+id/textNull"
+        android:layout_width="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="暂无商品"
+        android:visibility="gone" />
+
+</LinearLayout>
