@@ -54,8 +54,7 @@ public interface ConstantValue {
 	/**
 	 * 服务器地址
 	 */
-
-	String URI = "http://192.168.1.70:8078";
+	String URI = "http://192.168.56.1:8080/Shopping_ec";
 
 	String BASEURL="http://bishe.java.jspee.net/";
 	String PRODUCTLISTINFO=BASEURL+"goodsShowManage_goodsShow.action";

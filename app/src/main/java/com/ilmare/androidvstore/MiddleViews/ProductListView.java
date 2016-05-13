@@ -2,7 +2,6 @@ package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ilmare.androidvstore.Domain.ProductList;
+import com.ilmare.androidvstore.Holder.ProductListItemsHolder;
 import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;

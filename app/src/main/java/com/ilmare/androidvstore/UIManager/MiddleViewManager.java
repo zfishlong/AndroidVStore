@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import com.ilmare.androidvstore.Domain.ProductList;
 import com.ilmare.androidvstore.MainActivity;
 import com.ilmare.androidvstore.MiddleViews.AccountView;
+import com.ilmare.androidvstore.MiddleViews.CategoryView;
 import com.ilmare.androidvstore.MiddleViews.HomeViews;
 import com.ilmare.androidvstore.MiddleViews.LoginView;
 import com.ilmare.androidvstore.MiddleViews.MoreView;
@@ -77,6 +78,11 @@ public class MiddleViewManager extends Observable {
                     break;
 
                 case ConstantValue.VIEW_BRAND:  //品牌分类
+                    CategoryView categoryView = new CategoryView(activity);
+                    categoryView.getRootView().setTag(ConstantValue.VIEW_BRAND);
+                    dlRlMiddle.addView(categoryView.getRootView());
+                    viewMap.put(ConstantValue.VIEW_BRAND, categoryView.getRootView());
+                    appStackManager.addStack(categoryView.getRootView());
                     break;
 
                 case ConstantValue.VIEW_SHOPPINGCART: //购物车
