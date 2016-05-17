@@ -12,6 +12,7 @@ import com.ilmare.androidvstore.MiddleViews.LoginView;
 import com.ilmare.androidvstore.MiddleViews.MoreView;
 import com.ilmare.androidvstore.MiddleViews.ProductDetailView;
 import com.ilmare.androidvstore.MiddleViews.ProductListView;
+import com.ilmare.androidvstore.MiddleViews.RegistView;
 import com.ilmare.androidvstore.MiddleViews.SearchView;
 import com.ilmare.androidvstore.MiddleViews.ShopingCarNoDataView;
 import com.ilmare.androidvstore.R;
@@ -140,6 +141,13 @@ public class MiddleViewManager extends Observable {
                         productDetailView.setProductEntity((ProductList.ProductEntity) dataToNextView);
                     }
                     appStackManager.addStack(productDetailView.getRootView());
+                    break;
+                case ConstantValue.REGISTER_VIEW:
+                    RegistView registView=new RegistView(activity);
+                    registView.getRootView().setTag(ConstantValue.REGISTER_VIEW);
+                    dlRlMiddle.addView(registView.getRootView());
+                    viewMap.put(ConstantValue.REGISTER_VIEW, registView.getRootView());
+                    appStackManager.addStack(registView.getRootView());
                     break;
             }
         }else{

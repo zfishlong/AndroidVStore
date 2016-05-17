@@ -25,6 +25,8 @@ public interface ConstantValue {
 	int VIEW_PAYMENT_SELECT = 11;
 
 	int PRODUCT_DETAIL_VIEW=12;
+
+	int REGISTER_VIEW=13;
 	/**
 	 * 正在显示首页
 	 */

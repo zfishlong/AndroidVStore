@@ -19,4 +19,6 @@
     <string name="no_information">没有商品信息</string>
     <string name="shopcar">加入购物车</string>
     <string name="collect">收藏</string>
+    <string name="login_name">用户名</string>
+    <string name="login_pwd">密码</string>
 </resources>

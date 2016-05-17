@@ -150,6 +150,9 @@ public class TitleBarManager implements Observer {
                 case ConstantValue.PRODUCT_DETAIL_VIEW:
                     showCommonTitle("商品信息");
                     break;
+                case ConstantValue.REGISTER_VIEW:
+                    showCommonTitle("注册");
+                    break;
             }
         }
     }

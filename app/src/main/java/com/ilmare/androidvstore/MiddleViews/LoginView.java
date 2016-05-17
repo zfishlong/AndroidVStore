@@ -85,7 +85,7 @@ public class LoginView extends RecyclerView.ViewHolder implements View.OnClickLi
         switch (v.getId()){
             case R.id.dl_user_login_regist: // 注册按钮
 
-                Toast.makeText(context, "不交钱别注册", Toast.LENGTH_SHORT).show();
+                MiddleViewManager.getInstance().changeView(ConstantValue.REGISTER_VIEW);
                 break;
 
             case R.id.dl_user_login:   //登录按钮
