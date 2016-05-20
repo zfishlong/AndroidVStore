@@ -14,6 +14,7 @@ import com.ilmare.androidvstore.MiddleViews.ProductDetailView;
 import com.ilmare.androidvstore.MiddleViews.ProductListView;
 import com.ilmare.androidvstore.MiddleViews.RegistView;
 import com.ilmare.androidvstore.MiddleViews.SearchView;
+import com.ilmare.androidvstore.MiddleViews.ShopingCarDatasView;
 import com.ilmare.androidvstore.MiddleViews.ShopingCarNoDataView;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.Utils.ConstantValue;
@@ -44,6 +45,8 @@ public class MiddleViewManager extends Observable {
 
 
     private Object dataToNextView;
+
+    public int CURRENTTAG=0;
 
     public void setDataToNextView(Object dataToNextView) {
         this.dataToNextView = dataToNextView;
@@ -86,11 +89,11 @@ public class MiddleViewManager extends Observable {
                     appStackManager.addStack(categoryView.getRootView());
                     break;
 
-                case ConstantValue.VIEW_SHOPPINGCART: //购物车
+                case ConstantValue.VIEW_SHOPPINGCART_NODATA: //购物车
                     ShopingCarNoDataView shopingCarNoDataView=new ShopingCarNoDataView(activity);
-                    shopingCarNoDataView.getRootView().setTag(ConstantValue.VIEW_SHOPPINGCART);
+                    shopingCarNoDataView.getRootView().setTag(ConstantValue.VIEW_SHOPPINGCART_NODATA);
                     dlRlMiddle.addView(shopingCarNoDataView.getRootView());
-                    viewMap.put(ConstantValue.VIEW_SHOPPINGCART, shopingCarNoDataView.getRootView());
+                    viewMap.put(ConstantValue.VIEW_SHOPPINGCART_NODATA, shopingCarNoDataView.getRootView());
                     appStackManager.addStack(shopingCarNoDataView.getRootView());
                     break;
 
@@ -148,6 +151,14 @@ public class MiddleViewManager extends Observable {
                     dlRlMiddle.addView(registView.getRootView());
                     viewMap.put(ConstantValue.REGISTER_VIEW, registView.getRootView());
                     appStackManager.addStack(registView.getRootView());
+                    break;
+
+                case ConstantValue.VIEW_SHOPPINGCART:
+                    ShopingCarDatasView shopingCarDatasView=new ShopingCarDatasView(activity);
+                    shopingCarDatasView.getRootView().setTag(ConstantValue.VIEW_SHOPPINGCART);
+                    dlRlMiddle.addView(shopingCarDatasView.getRootView());
+                    viewMap.put(ConstantValue.VIEW_SHOPPINGCART, shopingCarDatasView.getRootView());
+                    appStackManager.addStack(shopingCarDatasView.getRootView());
                     break;
             }
         }else{

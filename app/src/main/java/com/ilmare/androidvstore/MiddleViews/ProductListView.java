@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -48,25 +49,63 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     private ProductList productList;
     private MyProductListAdapter adapter;
 
-   public ProductListView(Context context) {
+    public ProductListView(Context context) {
         this(View.inflate(context, R.layout.product_list_activity, null), context);
     }
 
-    public ProductListView(View view,Context context) {
+    public ProductListView(View view, Context context) {
         super(view);
         ButterKnife.inject(this, view);
-        this.rootView=view;
-        this.context=context;
+        this.rootView = view;
+        this.context = context;
 
         this.rootView.setLayoutParams(
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.MATCH_PARENT));
 
+        String url="";
+        switch (MiddleViewManager.getInstance().CURRENTTAG) {
+
+            case ConstantValue.SHOPPINGSPRING:
+                url=ConstantValue.PRODUCTLISTINFO;
+                getData(url);
+                break;
+            case ConstantValue.NEWPRODUCT:
+                 url=ConstantValue.PRODUCTLISTINFO;
+                getData(url);
+                break;
+            case ConstantValue.HOTPRODUCT:
+                url=ConstantValue.PRODUCTLISTINFO;
+                getData(url);
+                break;
+            case ConstantValue.BRANDITEM:
+               url=ConstantValue.PRODUCTLISTINFO;
+                getData(url);
+                break;
+            default:
+               url=ConstantValue.PRODUCTLISTINFO;
+                getData(url);
+                break;
+
+        }
+
+
+        textRankSale.setOnClickListener(this);
+        textRankPrice.setOnClickListener(this);
+        textRankGood.setOnClickListener(this);
+        textRankTime.setOnClickListener(this);
+
+        productListView.setOnItemClickListener(this);
+    }
+
+
+
+    private void getData2(String url) {
         //初始化的操作
-        NetUtils.getJson(ConstantValue.PRODUCTLISTINFO, new NetUtils.NetAccessListener() {
+        NetUtils.getJson(url, new NetUtils.NetAccessListener() {
             @Override
             public void onSeccuss(String json) {
-                Gson gson=new Gson();
+                Gson gson = new Gson();
 
                 productList = gson.fromJson(json, ProductList.class);
                 adapter = new MyProductListAdapter();
@@ -79,16 +118,31 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
             }
         });
-
-        textRankSale.setOnClickListener(this);
-        textRankPrice.setOnClickListener(this);
-        textRankGood.setOnClickListener(this);
-        textRankTime.setOnClickListener(this);
-
-        productListView.setOnItemClickListener(this);
     }
 
-    private void initTextView(){
+
+
+    private void getData(String url) {
+        //初始化的操作
+        NetUtils.getJson( url, new NetUtils.NetAccessListener() {
+            @Override
+            public void onSeccuss(String json) {
+                Gson gson = new Gson();
+
+                productList = gson.fromJson(json, ProductList.class);
+                adapter = new MyProductListAdapter();
+                productListView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailed(String error) {
+
+            }
+        });
+    }
+
+    private void initTextView() {
         textRankSale.setBackgroundResource(R.mipmap.segment_normal_2_bg);
         textRankPrice.setBackgroundResource(R.mipmap.segment_normal_2_bg);
         textRankGood.setBackgroundResource(R.mipmap.segment_normal_2_bg);
@@ -98,7 +152,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     @Override
     public void onClick(View v) {
         initTextView();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.textRankSale:
                 textRankSale
                         .setBackgroundResource(R.mipmap.segment_selected_1_bg);
@@ -130,7 +184,6 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        //TODO 根据条目跳转到商品详情界面
         ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
 
         MiddleViewManager.getInstance().setDataToNextView(productEntity);
@@ -141,7 +194,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     }
 
 
-    private class MyProductListAdapter extends BaseAdapter{
+    private class MyProductListAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -150,7 +203,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
         @Override
         public Object getItem(int position) {
-            return  productList.getListGoods().get(position);
+            return productList.getListGoods().get(position);
         }
 
         @Override
@@ -160,20 +213,20 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ProductListItemsHolder holder=null;
-            if(convertView==null){
-                convertView=View.inflate(context,R.layout.product_list_items,null);
-                holder=new ProductListItemsHolder(convertView);
+            ProductListItemsHolder holder = null;
+            if (convertView == null) {
+                convertView = View.inflate(context, R.layout.product_list_items, null);
+                holder = new ProductListItemsHolder(convertView);
                 convertView.setTag(holder);
 
-            }else{
-                holder= (ProductListItemsHolder) convertView.getTag();
+            } else {
+                holder = (ProductListItemsHolder) convertView.getTag();
             }
 
-            ProductList.ProductEntity productEntity=productList.getListGoods().get(position);
+            ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
             holder.getTextClothesName().setText(productEntity.getGoodsName());//商品名称
-            holder.getTextClothesPrice().setText("¥"+productEntity.getPrice()+"");//商品价格
-            holder.getTextMarketPrice().setText("原价：¥"+(productEntity.getPrice()+20));//原价
+            holder.getTextClothesPrice().setText("¥" + productEntity.getPrice() + "");//商品价格
+            holder.getTextMarketPrice().setText("原价：¥" + (productEntity.getPrice() + 20));//原价
             Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getPicPath()).fit().into(holder.getGoodsIconIv());
             return convertView;
         }
@@ -183,7 +236,6 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     public View getRootView() {
         return rootView;
     }
-
 
 
 }

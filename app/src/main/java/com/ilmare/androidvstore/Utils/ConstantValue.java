@@ -14,7 +14,7 @@ public interface ConstantValue {
 
 	int VIEW_BRAND = 3;
 
-	int VIEW_SHOPPINGCART = 4;
+	int VIEW_SHOPPINGCART_NODATA = 4;
 
 	int VIEW_MYCOUNT = 5;
 
@@ -27,6 +27,8 @@ public interface ConstantValue {
 	int PRODUCT_DETAIL_VIEW=12;
 
 	int REGISTER_VIEW=13;
+
+	int VIEW_SHOPPINGCART = 14;
 	/**
 	 * 正在显示首页
 	 */
@@ -56,7 +58,7 @@ public interface ConstantValue {
 	/**
 	 * 服务器地址
 	 */
-	String URI = "http://192.168.56.1:8080/Shopping_ec";
+	String URI = "http://www.ilmare.site/Shopping_ec";
 
 	String BASEURL="http://bishe.java.jspee.net/";
 	String PRODUCTLISTINFO=BASEURL+"goodsShowManage_goodsShow.action";
@@ -92,6 +94,8 @@ public interface ConstantValue {
 
 
 	int PRODUCT_LIST_VIEW=1029;
+
+
 	/**
 	 * 限时抢购
 	 */
@@ -100,14 +104,12 @@ public interface ConstantValue {
 	 * 新品
 	 */
 	int NEWPRODUCT = 1040;
-	/**
-	 * 热门新品
-	 */
-	String NEWSPRODUCT = "/x_search_product_pinpai.php";
+
 	/**
 	 * 热门单品
 	 */
 	int HOTPRODUCT = 1050;
+
 	/**
 	 * 品牌详情
 	 */
@@ -186,6 +188,7 @@ public interface ConstantValue {
 	 * 热门单品
 	 */
 	String HOTPRODUCTURI = "/x_search_product_remen.php";
+
 
 
 }

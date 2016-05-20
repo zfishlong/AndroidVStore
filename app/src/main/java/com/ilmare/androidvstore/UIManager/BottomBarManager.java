@@ -10,6 +10,7 @@ import com.ilmare.androidvstore.MainActivity;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.Utils.ConstantValue;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -90,7 +91,17 @@ public class BottomBarManager implements View.OnClickListener, Observer {
                 break;
             case R.id.imgShoppingCar:  //购物车点击事件
                 imgShoppingCar.setImageResource(R.mipmap.bar_shopping_selected);
-                MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_SHOPPINGCART);
+
+                File file=new File(activity.getCacheDir(), "a.txt");
+
+                if(!file.exists()){
+                    MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_SHOPPINGCART_NODATA);
+                }else{
+                    MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_SHOPPINGCART);
+                }
+
+
+
                 break;
         }
 

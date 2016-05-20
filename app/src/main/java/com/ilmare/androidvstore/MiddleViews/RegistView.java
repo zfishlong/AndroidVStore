@@ -92,8 +92,6 @@ public class RegistView extends RecyclerView.ViewHolder {
                 }
 
 
-                //TODO 上传服务器
-//                cusRegisterManage_cusRegister.action?cusName=星辰大海&cusPasswd=1111&tel=15154299317&cusAddress=山东省青岛市
                 String url = ConstantValue.BASEURL + "cusRegisterManage_cusRegister.action?cusName=" + userName + "&cusPasswd=" + password + "&tel=" + tel
                         + "&cusAddress=" + address;
                 System.out.println(url);

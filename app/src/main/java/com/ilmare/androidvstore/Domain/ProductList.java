@@ -1,5 +1,6 @@
 package com.ilmare.androidvstore.Domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * History:
  * 版权所有
  */
-public class ProductList {
+public class ProductList implements Serializable{
 
     /**
      * address : 美国
@@ -47,7 +48,7 @@ public class ProductList {
                 '}';
     }
 
-    public static class ProductEntity {
+    public static class ProductEntity implements Serializable {
         private String address;
         private int bid;
         private String brand;

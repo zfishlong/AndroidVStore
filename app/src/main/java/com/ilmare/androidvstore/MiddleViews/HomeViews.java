@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -126,31 +127,25 @@ public class HomeViews {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 0:   //限时抢购
                         MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_LIST_VIEW);
+                        MiddleViewManager.getInstance().CURRENTTAG=ConstantValue.SHOPPINGSPRING;
                         break;
-                    case 1:
+                    case 1:   //促销信息
                         MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_LIST_VIEW);
+                        MiddleViewManager.getInstance().CURRENTTAG=ConstantValue.SHOPPINGSPRING;
                         break;
-                    case 2:
+                    case 2: //新品上市
                         MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_LIST_VIEW);
+                        MiddleViewManager.getInstance().CURRENTTAG=ConstantValue.NEWPRODUCT;
                         break;
-                    case 3:
-//                        NetUtils.getJson("http://bishe.java.jspee.net/goodsShowManage_goodsShow.action", new NetUtils.NetAccessListener() {
-//                            @Override
-//                            public void onSeccuss(String json) {
-//                                Gson gson=new Gson();
-//                                ProductList product=gson.fromJson(json, ProductList.class);
-//                                System.out.println(product.toString());
-//                            }
-//                            @Override
-//                            public void onFailed(String error) {
-//
-//                            }
-//                        });
-                        break;
-                    case 4 :
+                    case 3: //热门精品
                         MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_LIST_VIEW);
+                        MiddleViewManager.getInstance().CURRENTTAG=ConstantValue.HOTPRODUCT;
+                        break;
+                    case 4 : //品牌详情
+                        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_LIST_VIEW);
+                        MiddleViewManager.getInstance().CURRENTTAG=ConstantValue.BRANDITEM;
                         break;
                 }
             }
@@ -212,6 +207,11 @@ public class HomeViews {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView=imageViews.get(position % resID.length);
+
+            if(imageView.getParent()!=null){
+                container.removeView(imageView);
+            }
+
             container.addView(imageView);
             return imageViews.get(position % resID.length);
         }
@@ -219,6 +219,7 @@ public class HomeViews {
         //销毁对象时调用
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
+
             container.removeView((View) object);
         }
 

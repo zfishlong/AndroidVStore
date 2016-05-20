@@ -1,10 +1,11 @@
 package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -14,11 +15,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.ilmare.androidvstore.Domain.ProductList;
+import com.ilmare.androidvstore.Domain.ShopingCar;
+import com.ilmare.androidvstore.Domain.ShopingCarItem;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.Utils.ConstantValue;
 import com.squareup.picasso.Picasso;
 
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,23 +104,23 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
     @InjectView(R.id.textProdToCollect)
     TextView textProdToCollect;
 
-   private Context context;
+    private Context context;
     private View rootView;
 
-    private int lastPosition=0;
+    private int lastPosition = 0;
     private ProductList.ProductEntity productEntity;
 
-
+    private ShopingCar shopingCar=new ShopingCar();
 
     public ProductDetailView(Context context) {
         this(View.inflate(context, R.layout.product_detail_activity, null), context);
     }
 
-    public ProductDetailView(View view,Context context) {
+    public ProductDetailView(View view, Context context) {
         super(view);
         ButterKnife.inject(this, view);
-        this.context=context;
-        this.rootView=view;
+        this.context = context;
+        this.rootView = view;
 
         this.rootView.setLayoutParams(
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -116,7 +129,6 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
 
 //
     }
-
 
 
     public View getRootView() {
@@ -146,7 +158,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 imgPoint.getChildAt(lastPosition).setEnabled(false);
                 imgPoint.getChildAt(position).setEnabled(true);
-                lastPosition=position;
+                lastPosition = position;
             }
 
             @Override
@@ -164,7 +176,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         //设置文本信息
         textProductNameValue.setText(productEntity.getGoodsName());
         textProductIdValue.setText(productEntity.getGoodsId());
-        textOriginalPriceValue.setText("¥"+(productEntity.getPrice()+20));
+        textOriginalPriceValue.setText("¥" + (productEntity.getPrice() + 20));
         textProdGradeValue.setImageResource(R.mipmap.level_2);
         textPriceValue.setText("¥" + productEntity.getPrice() + "");
 
@@ -189,11 +201,40 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.textPutIntoShopcar:
+
+                if (TextUtils.isEmpty(prodNumValue.getText().toString())) {
+                    Toast.makeText(context, "订单数量不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                ShopingCarItem shopingCarItem = new ShopingCarItem();
+                shopingCarItem.setShopingCarItemProductEntity(productEntity);
+                shopingCarItem.setOrderNumber(Integer.parseInt(prodNumValue.getText().toString()));
+
+
+
+                shopingCar.setShoppingItem(shopingCarItem);
+                File file=new File(context.getCacheDir(), "a.txt");
+
+                if(file.exists()){
+                    file.delete();
+                }
+
+                try {
+
+                    ObjectOutputStream outputStream = new ObjectOutputStream(
+                            new FileOutputStream(file));
+                    outputStream.writeObject(shopingCar.getShopingCarList());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
                 Toast.makeText(context, "加入购物车", Toast.LENGTH_SHORT).show();
 
-                //TODO 真的加入购物车 逻辑
                 break;
             case R.id.textProdToCollect:
                 Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
@@ -204,7 +245,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
     }
 
 
-    private class  MyProductPagerAdapter extends PagerAdapter{
+    private class MyProductPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -213,13 +254,13 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view==object;
+            return view == object;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ImageView imageView=new ImageView(context);
-            Picasso.with(context).load(ConstantValue.BASEURL+productEntity.getPicPath()).fit().into(imageView);
+            ImageView imageView = new ImageView(context);
+            Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getPicPath()).fit().into(imageView);
             container.addView(imageView);
             return imageView;
         }
