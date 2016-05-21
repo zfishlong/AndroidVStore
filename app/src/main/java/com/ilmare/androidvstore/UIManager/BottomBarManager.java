@@ -93,15 +93,11 @@ public class BottomBarManager implements View.OnClickListener, Observer {
                 imgShoppingCar.setImageResource(R.mipmap.bar_shopping_selected);
 
                 File file=new File(activity.getCacheDir(), "a.txt");
-
                 if(!file.exists()){
                     MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_SHOPPINGCART_NODATA);
                 }else{
                     MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_SHOPPINGCART);
                 }
-
-
-
                 break;
         }
 

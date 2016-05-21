@@ -1,7 +1,9 @@
 package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +13,15 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ilmare.androidvstore.Domain.ShopingCarItem;
+import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.Holder.PaymentCenterItemsHolder;
+import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
+import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
 import com.squareup.picasso.Picasso;
 
@@ -103,10 +110,12 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
 
         int countSum = 0;
         int priceSum = 0;
+
         for (ShopingCarItem item : shopingCarItems) {
             countSum += item.getOrderNumber();
             priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
         }
+
         paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
         shopcarTotalBuycountText.setText(countSum + " ");
         shopcarTotalMoneyText.setText("￥" + priceSum + "");
@@ -147,7 +156,34 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
     @Override
     public void onClick(View v) {
 
-        //TODO 提交订单
+
+        SharedPreferences sp=context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        String userJson=sp.getString("currentUser", "");
+
+        if(TextUtils.isEmpty(userJson)){
+            MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
+        }else{
+            Gson gson=new Gson();
+            UserInfo info=gson.fromJson(userJson,UserInfo.class);
+            for (ShopingCarItem item : shopingCarItems) {
+                NetUtils.getJson(ConstantValue.MAKE_ORDER + "?cusId=" + info.getListCus().get(0).getCusId() + "&goodsId="+
+                        item.getShopingCarItemProductEntity().getGoodsId()+"&num="+item.getOrderNumber(), new NetUtils.NetAccessListener() {
+                    @Override
+                    public void onSeccuss(String json) {
+
+                    }
+
+                    @Override
+                    public void onFailed(String error) {
+
+                    }
+                });
+            }
+
+            Toast.makeText(context, "订单成功！", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 

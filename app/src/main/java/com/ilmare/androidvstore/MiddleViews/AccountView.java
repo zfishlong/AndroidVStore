@@ -1,6 +1,7 @@
 package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.R;
+import com.ilmare.androidvstore.UIManager.MiddleViewManager;
+import com.ilmare.androidvstore.Utils.ConstantValue;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @InjectView(R.id.li_message)
-    LinearLayout liMessage;
+
+
     @InjectView(R.id.tv_username)
     TextView tvUsername;
     @InjectView(R.id.tv_grade)
@@ -57,6 +62,15 @@ public class AccountView extends RecyclerView.ViewHolder implements View.OnClick
         myNameLin2.setOnClickListener(this);
         myNameLin3.setOnClickListener(this);
         myNameLin4.setOnClickListener(this);
+
+
+        SharedPreferences sp=context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        String userJson=sp.getString("currentUser", "");
+        Gson gson=new Gson();
+        UserInfo info=gson.fromJson(userJson,UserInfo.class);
+
+        tvUsername.setText(info.getListCus().get(0).getCusName());
+
     }
 
     public View getRootView() {
@@ -70,7 +84,12 @@ public class AccountView extends RecyclerView.ViewHolder implements View.OnClick
         switch (v.getId()){
             case R.id.my_name_lin1:
 
+
+                MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_ORDER_LIST);
                 Toast.makeText(context, "我的订单", Toast.LENGTH_SHORT).show();
+
+
+
                 break;
             case R.id.my_name_lin2:
 

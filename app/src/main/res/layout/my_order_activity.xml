@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/home_backgroud" >
+
+
+
+    <LinearLayout
+        android:id="@+id/my_order_tab"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/segment_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+      >
+
+        <TextView
+            android:id="@+id/my_order_month"
+            style="@style/style_13_4B4B4B_BOLD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_normal_1_bg"
+            android:gravity="center"
+            android:text="近一月订单" />
+
+        <TextView
+            android:id="@+id/my_order_all"
+            style="@style/style_13_FFFFFF_BOLD"
+            android:layout_width="100.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_selected_2_bg"
+            android:gravity="center"
+            android:text="一个月前订单" />
+
+        <TextView
+            android:id="@+id/my_order_notsend"
+            style="@style/style_13_4B4B4B_BOLD"
+            android:layout_width="100.0dip"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/segment_normal_3_bg"
+            android:gravity="center"
+            android:text="已取消订单" />
+    </LinearLayout>
+    
+    <ProgressBar
+        android:id="@+id/pb_load"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_order_tab" />
+	
+    <ListView
+        android:id="@+id/my_order_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/my_order_tab"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="10.0dip"
+        android:background="@null"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:dividerHeight="10.0dip"
+        android:fadingEdgeLength="1.0dip"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="true" />
+
+    <TextView
+        android:id="@+id/my_order_null_text"
+        style="@style/style_18_666666"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="暂无订单"
+        android:visibility="gone" />
+
+</RelativeLayout>

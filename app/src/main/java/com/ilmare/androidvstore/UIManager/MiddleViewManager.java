@@ -10,6 +10,7 @@ import com.ilmare.androidvstore.MiddleViews.CategoryView;
 import com.ilmare.androidvstore.MiddleViews.HomeViews;
 import com.ilmare.androidvstore.MiddleViews.LoginView;
 import com.ilmare.androidvstore.MiddleViews.MoreView;
+import com.ilmare.androidvstore.MiddleViews.MyOrderView;
 import com.ilmare.androidvstore.MiddleViews.ProductDetailView;
 import com.ilmare.androidvstore.MiddleViews.ProductListView;
 import com.ilmare.androidvstore.MiddleViews.RegistView;
@@ -113,7 +114,7 @@ public class MiddleViewManager extends Observable {
                     appStackManager.addStack(moreView.getRootView());
                     break;
 
-                case ConstantValue.LOGIN_VIEW:
+                case ConstantValue.LOGIN_VIEW:   //登录界面
                     LoginView loginView=new LoginView(activity);
                     loginView.getRootView().setTag(ConstantValue.LOGIN_VIEW);
                     dlRlMiddle.addView(loginView.getRootView());
@@ -121,7 +122,7 @@ public class MiddleViewManager extends Observable {
                     appStackManager.addStack(loginView.getRootView());
                     break;
 
-                case ConstantValue.ACCOUNT_VIEW:
+                case ConstantValue.ACCOUNT_VIEW: //账户界面
                     AccountView accountView=new AccountView(activity);
                     accountView.getRootView().setTag(ConstantValue.ACCOUNT_VIEW);
                     dlRlMiddle.addView(accountView.getRootView());
@@ -159,6 +160,14 @@ public class MiddleViewManager extends Observable {
                     dlRlMiddle.addView(shopingCarDatasView.getRootView());
                     viewMap.put(ConstantValue.VIEW_SHOPPINGCART, shopingCarDatasView.getRootView());
                     appStackManager.addStack(shopingCarDatasView.getRootView());
+                    break;
+
+                case ConstantValue.VIEW_ORDER_LIST:
+                    MyOrderView myOrderView=new MyOrderView(activity);
+                    myOrderView.getRootView().setTag(ConstantValue.VIEW_ORDER_LIST);
+                    dlRlMiddle.addView(myOrderView.getRootView());
+                    viewMap.put(ConstantValue.VIEW_ORDER_LIST, myOrderView.getRootView());
+                    appStackManager.addStack(myOrderView.getRootView());
                     break;
             }
         }else{

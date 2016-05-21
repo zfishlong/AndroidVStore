@@ -1,7 +1,9 @@
 package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
+
+import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -75,11 +81,16 @@ public class MoreView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sp=contetx.getSharedPreferences("config",Context.MODE_PRIVATE);
+        String userJson=sp.getString("currentUser", "");
 
         switch (v.getId()){
             case R.id.my_account_rl:  //我的账户 --->登录
-//                Toast.makeText(contetx, "我的账户", Toast.LENGTH_SHORT).show();
-                MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
+                if(TextUtils.isEmpty(userJson)){
+                    MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
+                }else{
+                    MiddleViewManager.getInstance().changeView(ConstantValue.ACCOUNT_VIEW);
+                }
                 break;
 
             case R.id.my_favorite_rl:
@@ -111,8 +122,12 @@ public class MoreView implements View.OnClickListener {
                 //TODO 关于我们
                 break;
             case R.id.my_order_rl:
-                Toast.makeText(contetx, "我的订单", Toast.LENGTH_SHORT).show();
-                //TODO 我的订单
+
+                if(TextUtils.isEmpty(userJson)){
+                    MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
+                }else{
+                    MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_ORDER_LIST);
+                }
                 break;
         }
 

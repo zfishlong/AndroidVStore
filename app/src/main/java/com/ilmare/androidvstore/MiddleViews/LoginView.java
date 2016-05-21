@@ -1,6 +1,7 @@
 package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -108,6 +109,10 @@ public class LoginView extends RecyclerView.ViewHolder implements View.OnClickLi
                         if (json != null && !"".equals(json)) {
                             Gson gson = new Gson();
                             UserInfo userInfo = gson.fromJson(json, UserInfo.class);
+
+                            SharedPreferences sp=context.getSharedPreferences("config",Context.MODE_PRIVATE);
+                            sp.edit().putString("currentUser",json).commit();
+
                             Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
 
                             MiddleViewManager.getInstance().changeView(ConstantValue.ACCOUNT_VIEW);
