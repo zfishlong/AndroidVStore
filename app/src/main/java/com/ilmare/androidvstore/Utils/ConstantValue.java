@@ -60,7 +60,7 @@ public interface ConstantValue {
 	 */
 	String URI = "http://www.ilmare.site/Shopping_ec";
 
-	String BASEURL="http://bishe.java.jspee.net/";
+	String BASEURL="http://lizhangyan.java.jspee.cn/";
 	String PRODUCTLISTINFO=BASEURL+"goodsShowManage_goodsShow.action";  //商品信息
 	String MAKE_ORDER=BASEURL+"cusToOrderManage_handleCusOrder.action";  //下订单
 

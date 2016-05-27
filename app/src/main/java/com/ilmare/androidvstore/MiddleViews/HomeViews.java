@@ -5,10 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -18,10 +16,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.ilmare.androidvstore.Beans.Product;
-import com.ilmare.androidvstore.Domain.ProductList;
-import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
@@ -57,15 +51,15 @@ public class HomeViews {
             R.mipmap.home_classify_02, R.mipmap.home_classify_03,
             R.mipmap.home_classify_04, R.mipmap.home_classify_05};
 
-    private boolean isStop=false;
+
 
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             viewpager.setCurrentItem(currentPosition+1);
-            if(!isStop){
+
                 handler.sendEmptyMessageDelayed(0,3000);
-            }
+
         }
     };
 

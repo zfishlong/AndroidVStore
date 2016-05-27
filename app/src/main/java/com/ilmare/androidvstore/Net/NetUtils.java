@@ -1,8 +1,5 @@
 package com.ilmare.androidvstore.Net;
 
-import android.os.Handler;
-import android.os.Message;
-
 import com.ilmare.androidvstore.Utils.VStoreApplication;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;

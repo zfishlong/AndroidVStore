@@ -2,22 +2,15 @@ package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
-
-import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -51,17 +44,18 @@ public class MoreView implements View.OnClickListener {
     @InjectView(R.id.aboutRelLay)
     RelativeLayout aboutRelLay;
 
-   private  View rootView;
+    private View rootView;
     private Context contetx;
+
     public MoreView(Context context) {
 
         this(View.inflate(context, R.layout.more_activity, null));
-        this.contetx=context;
+        this.contetx = context;
     }
 
     public MoreView(View view) {
         ButterKnife.inject(this, view);
-        this.rootView=view;
+        this.rootView = view;
 
         myAccountRl.setOnClickListener(this);
         myFavoriteRl.setOnClickListener(this);
@@ -71,7 +65,7 @@ public class MoreView implements View.OnClickListener {
         aboutRelLay.setOnClickListener(this);
         addressManageRl.setOnClickListener(this);
         myOrderRl.setOnClickListener(this);
-     
+
     }
 
     public View getRootView() {
@@ -81,14 +75,14 @@ public class MoreView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        SharedPreferences sp=contetx.getSharedPreferences("config",Context.MODE_PRIVATE);
-        String userJson=sp.getString("currentUser", "");
+        SharedPreferences sp = contetx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        String userJson = sp.getString("currentUser", "");
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.my_account_rl:  //我的账户 --->登录
-                if(TextUtils.isEmpty(userJson)){
+                if (TextUtils.isEmpty(userJson)) {
                     MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
-                }else{
+                } else {
                     MiddleViewManager.getInstance().changeView(ConstantValue.ACCOUNT_VIEW);
                 }
                 break;
@@ -103,7 +97,7 @@ public class MoreView implements View.OnClickListener {
                 //TODO 地址管理页面
                 break;
 
-            case   R.id.recent_browse_rl:
+            case R.id.recent_browse_rl:
                 Toast.makeText(contetx, "最近浏览", Toast.LENGTH_SHORT).show();
                 //TODO 最近浏览
                 break;
@@ -122,15 +116,13 @@ public class MoreView implements View.OnClickListener {
                 //TODO 关于我们
                 break;
             case R.id.my_order_rl:
-
-                if(TextUtils.isEmpty(userJson)){
+                if (TextUtils.isEmpty(userJson)) {
                     MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
-                }else{
+                } else {
                     MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_ORDER_LIST);
                 }
                 break;
         }
-
 
 
     }

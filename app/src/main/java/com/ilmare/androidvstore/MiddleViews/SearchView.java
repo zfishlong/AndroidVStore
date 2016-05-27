@@ -27,7 +27,9 @@ public class SearchView extends RecyclerView.ViewHolder {
     RelativeLayout relSpace;
     @InjectView(R.id.hotWordsLv)
     ListView hotWordsLv;
+
     private Context context;
+
     private View rootView;
 
     public SearchView(Context context) {

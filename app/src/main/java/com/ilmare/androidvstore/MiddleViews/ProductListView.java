@@ -21,6 +21,8 @@ import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
 import com.squareup.picasso.Picasso;
 
+import java.sql.SQLOutput;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -227,6 +229,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
             holder.getTextClothesName().setText(productEntity.getGoodsName());//商品名称
             holder.getTextClothesPrice().setText("¥" + productEntity.getPrice() + "");//商品价格
             holder.getTextMarketPrice().setText("原价：¥" + (productEntity.getPrice() + 20));//原价
+            System.out.println(ConstantValue.BASEURL+ productEntity.getPicPath());
             Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getPicPath()).fit().into(holder.getGoodsIconIv());
             return convertView;
         }

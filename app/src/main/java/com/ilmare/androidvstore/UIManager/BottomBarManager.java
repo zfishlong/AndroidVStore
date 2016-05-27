@@ -1,10 +1,8 @@
 package com.ilmare.androidvstore.UIManager;
 
-import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.ilmare.androidvstore.MainActivity;
 import com.ilmare.androidvstore.R;
@@ -14,16 +12,7 @@ import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
-/**
- * Created by zhangchenggeng
- * Time 5/7/2016 8:41 PM.
- * Descripton:
- * History:
- * 版权所有
- */
 public class BottomBarManager implements View.OnClickListener, Observer {
 
 

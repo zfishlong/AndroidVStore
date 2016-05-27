@@ -134,7 +134,7 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
             ObjectInputStream inputStream = new ObjectInputStream(
                     new FileInputStream(file));
 
-            shopingCarItems = (ArrayList<ShopingCarItem>) inputStream.readObject();
+            shopingCarItems = (ArrayList<ShopingCarItem>)inputStream.readObject();
             System.out.println(shopingCarItems.size());
             paymentProductList.setAdapter(new MyShopingCarItemAdapter());
 
