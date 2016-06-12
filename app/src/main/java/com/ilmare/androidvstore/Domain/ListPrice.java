@@ -84,7 +84,7 @@ public class ListPrice implements Serializable{
 
     public int getPriceByPriceTypeIdAndISBN(String priceType,String isbn){
         for (ListPriceEntity listPriceEntity : listPrice) {
-            if(listPriceEntity.getIsbn().equals(priceType)&&listPriceEntity.getPricetypeid().equals(isbn)){
+            if(listPriceEntity.getIsbn().equals(isbn)&&listPriceEntity.getPricetypeid().equals(priceType)){
                 return listPriceEntity.getPrice();
             }
         }

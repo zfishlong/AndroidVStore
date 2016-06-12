@@ -2,6 +2,7 @@ package com.ilmare.androidvstore.MiddleViews;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ilmare.androidvstore.Domain.ListPrice;
 import com.ilmare.androidvstore.Domain.ProductList;
+import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.Holder.ProductListItemsHolder;
 import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
@@ -52,6 +54,8 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     private ProductList productList;
     private MyProductListAdapter adapter;
     private ListPrice listPrice;
+
+    private String priceType="1";
 
     public ProductListView(Context context) {
         this(View.inflate(context, R.layout.product_list_activity, null), context);
@@ -100,6 +104,12 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
         productListView.setOnItemClickListener(this);
 
+        String currentUser = context.getSharedPreferences("config", Context.MODE_PRIVATE).getString("currentUser", "");
+        if(!TextUtils.isEmpty(currentUser)){
+            Gson gson=new Gson();
+            UserInfo userInfo = gson.fromJson(currentUser, UserInfo.class);
+            priceType=userInfo.getListCus().get(0).getPriceTypeId();
+        }
 
     }
 
@@ -128,13 +138,29 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
 
 
-    private void getData(String url) {
+    private void getData(final String url) {
 
         NetUtils.getJson(ConstantValue.LISTPRICE, new NetUtils.NetAccessListener() {
             @Override
             public void onSeccuss(String json) {
                 Gson gson=new Gson();
                 listPrice = gson.fromJson(json, ListPrice.class);
+
+                //初始化的操作
+                NetUtils.getJson(url, new NetUtils.NetAccessListener() {
+                    @Override
+                    public void onSeccuss(String json) {
+                        Gson gson = new Gson();
+                        productList = gson.fromJson(json, ProductList.class);
+                        adapter = new MyProductListAdapter();
+                        productListView.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onFailed(String error) {
+
+                    }
+                });
             }
 
             @Override
@@ -143,21 +169,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
             }
         });
 
-        //初始化的操作
-        NetUtils.getJson(url, new NetUtils.NetAccessListener() {
-            @Override
-            public void onSeccuss(String json) {
-                Gson gson = new Gson();
-                productList = gson.fromJson(json, ProductList.class);
-                adapter = new MyProductListAdapter();
-                productListView.setAdapter(adapter);
-            }
 
-            @Override
-            public void onFailed(String error) {
-
-            }
-        });
 
 
 
@@ -207,9 +219,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 //        ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
-//
 //        MiddleViewManager.getInstance().setDataToNextView(productEntity);
-//
 //        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_DETAIL_VIEW);
 
 
@@ -251,7 +261,8 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
             holder.getTextClothesName().setText(goodsEntity.getGoodsName());//商品名称
 
-            holder.getTextClothesPrice().setText("￥"+listPrice.getPriceByPriceTypeIdAndISBN(goodsEntity.getIsbn(),"1") );//商品价格
+
+            holder.getTextClothesPrice().setText("￥"+listPrice.getPriceByPriceTypeIdAndISBN(priceType,goodsEntity.getIsbn()));//商品价格
 
             holder.getTextMarketPrice().setText("库存量：" + listStorageEntity.getStorageNum());//原价
 
