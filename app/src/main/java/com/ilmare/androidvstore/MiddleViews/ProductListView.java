@@ -13,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.ilmare.androidvstore.Domain.ListPrice;
 import com.ilmare.androidvstore.Domain.ProductList;
 import com.ilmare.androidvstore.Holder.ProductListItemsHolder;
 import com.ilmare.androidvstore.Net.NetUtils;
@@ -50,6 +51,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
     private ProductList productList;
     private MyProductListAdapter adapter;
+    private ListPrice listPrice;
 
     public ProductListView(Context context) {
         this(View.inflate(context, R.layout.product_list_activity, null), context);
@@ -66,8 +68,8 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
                         RelativeLayout.LayoutParams.MATCH_PARENT));
 
         String url="";
-        switch (MiddleViewManager.getInstance().CURRENTTAG) {
 
+        switch (MiddleViewManager.getInstance().CURRENTTAG) {
             case ConstantValue.SHOPPINGSPRING:
                 url=ConstantValue.PRODUCTLISTINFO;
                 getData(url);
@@ -111,6 +113,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
                 productList = gson.fromJson(json, ProductList.class);
                 adapter = new MyProductListAdapter();
+
                 productListView.setAdapter(adapter);
 
             }
@@ -125,16 +128,12 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
 
     private void getData(String url) {
-        //初始化的操作
-        NetUtils.getJson( url, new NetUtils.NetAccessListener() {
+
+        NetUtils.getJson(ConstantValue.LISTPRICE, new NetUtils.NetAccessListener() {
             @Override
             public void onSeccuss(String json) {
-                Gson gson = new Gson();
-
-                productList = gson.fromJson(json, ProductList.class);
-                adapter = new MyProductListAdapter();
-                productListView.setAdapter(adapter);
-
+                Gson gson=new Gson();
+                listPrice = gson.fromJson(json, ListPrice.class);
             }
 
             @Override
@@ -142,6 +141,26 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
             }
         });
+
+        //初始化的操作
+        NetUtils.getJson(url, new NetUtils.NetAccessListener() {
+            @Override
+            public void onSeccuss(String json) {
+                Gson gson = new Gson();
+                productList = gson.fromJson(json, ProductList.class);
+                adapter = new MyProductListAdapter();
+                productListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailed(String error) {
+
+            }
+        });
+
+
+
+
     }
 
     private void initTextView() {
@@ -186,11 +205,11 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
-
-        MiddleViewManager.getInstance().setDataToNextView(productEntity);
-
-        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_DETAIL_VIEW);
+//        ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
+//
+//        MiddleViewManager.getInstance().setDataToNextView(productEntity);
+//
+//        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_DETAIL_VIEW);
 
 
     }
@@ -200,12 +219,12 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
         @Override
         public int getCount() {
-            return productList.getListGoods().size();
+            return productList.getListStorage().size();
         }
 
         @Override
         public Object getItem(int position) {
-            return productList.getListGoods().get(position);
+            return productList.getListStorage().get(position);
         }
 
         @Override
@@ -225,12 +244,20 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
                 holder = (ProductListItemsHolder) convertView.getTag();
             }
 
-            ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
-            holder.getTextClothesName().setText(productEntity.getGoodsName());//商品名称
-            holder.getTextClothesPrice().setText("¥" + productEntity.getPrice() + "");//商品价格
-            holder.getTextMarketPrice().setText("原价：¥" + (productEntity.getPrice() + 20));//原价
-            System.out.println(ConstantValue.BASEURL+ productEntity.getPicPath());
-            Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getPicPath()).fit().into(holder.getGoodsIconIv());
+            ProductList.ListStorageEntity listStorageEntity = productList.getListStorage().get(position);
+            ProductList.ListStorageEntity.GoodsEntity goodsEntity=listStorageEntity.getGoods();
+
+
+            holder.getTextClothesName().setText(goodsEntity.getGoodsName());//商品名称
+
+            holder.getTextClothesPrice().setText("￥"+listPrice.getPriceByPriceTypeIdAndISBN(goodsEntity.getIsbn(),"1") );//商品价格
+
+            holder.getTextMarketPrice().setText("库存量：" + listStorageEntity.getStorageNum());//原价
+
+            System.out.println(ConstantValue.BASEURL+ goodsEntity.getPicPath());
+
+            Picasso.with(context).load(ConstantValue.BASEURL + goodsEntity.getPicPath()).fit().into(holder.getGoodsIconIv());
+
             return convertView;
         }
     }

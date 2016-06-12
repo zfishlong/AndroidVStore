@@ -142,7 +142,7 @@ public class MiddleViewManager extends Observable {
                     productDetailView.getRootView().setTag(ConstantValue.PRODUCT_DETAIL_VIEW);
                     dlRlMiddle.addView(productDetailView.getRootView());
                     if(dataToNextView!=null){
-                        productDetailView.setProductEntity((ProductList.ProductEntity) dataToNextView);
+                        productDetailView.setProductEntity((ProductList.ListStorageEntity.GoodsEntity) dataToNextView);
                     }
                     appStackManager.addStack(productDetailView.getRootView());
                     break;

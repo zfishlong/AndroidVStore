@@ -113,7 +113,7 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
 
         for (ShopingCarItem item : shopingCarItems) {
             countSum += item.getOrderNumber();
-            priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
+//            priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
         }
 
         paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
@@ -165,20 +165,20 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
         }else{
             Gson gson=new Gson();
             UserInfo info=gson.fromJson(userJson,UserInfo.class);
-            for (ShopingCarItem item : shopingCarItems) {
-                NetUtils.getJson(ConstantValue.MAKE_ORDER + "?cusId=" + info.getListCus().get(0).getCusId() + "&goodsId="+
-                        item.getShopingCarItemProductEntity().getGoodsId()+"&num="+item.getOrderNumber(), new NetUtils.NetAccessListener() {
-                    @Override
-                    public void onSeccuss(String json) {
-
-                    }
-
-                    @Override
-                    public void onFailed(String error) {
-
-                    }
-                });
-            }
+//            for (ShopingCarItem item : shopingCarItems) {
+//                NetUtils.getJson(ConstantValue.MAKE_ORDER + "?cusId=" + info.getListCus().get(0).getCusId() + "&goodsId="+
+//                        item.getShopingCarItemProductEntity().getGoodsId()+"&num="+item.getOrderNumber(), new NetUtils.NetAccessListener() {
+//                    @Override
+//                    public void onSeccuss(String json) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String error) {
+//
+//                    }
+//                });
+//            }
 
             Toast.makeText(context, "订单成功！", Toast.LENGTH_SHORT).show();
         }
@@ -223,12 +223,12 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
 
 
             Picasso.with(context).load(ConstantValue.BASEURL + item.getShopingCarItemProductEntity().getPicPath()).fit().into(holder.getShopcarItemProdImageImg());//图片
-
-            holder.getShopcarItemProdNameText().setText(item.getShopingCarItemProductEntity().getGoodsName()); //商品名称
-            holder.getShopcarItemProdIdText().setText(item.getShopingCarItemProductEntity().getGoodsId()); //商品编号
-            holder.getShopcarItemProdPriceText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + "");//商品价格
-            holder.getShopcarItemProdCountText().setText(item.getOrderNumber() + ""); //商品数量
-            holder.getShopcarItemSubtotalText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + ""); //小计
+//
+//            holder.getShopcarItemProdNameText().setText(item.getShopingCarItemProductEntity().getGoodsName()); //商品名称
+//            holder.getShopcarItemProdIdText().setText(item.getShopingCarItemProductEntity().getGoodsId()); //商品编号
+//            holder.getShopcarItemProdPriceText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + "");//商品价格
+//            holder.getShopcarItemProdCountText().setText(item.getOrderNumber() + ""); //商品数量
+//            holder.getShopcarItemSubtotalText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + ""); //小计
             return convertView;
         }
 

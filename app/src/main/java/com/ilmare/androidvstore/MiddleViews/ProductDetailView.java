@@ -108,7 +108,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
     private View rootView;
 
     private int lastPosition = 0;
-    private ProductList.ProductEntity productEntity;
+    private ProductList.ListStorageEntity.GoodsEntity productEntity;
 
     private ShopingCar shopingCar=new ShopingCar();
 
@@ -139,11 +139,11 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         this.rootView = rootView;
     }
 
-    public ProductList.ProductEntity getProductEntity() {
+    public ProductList.ListStorageEntity.GoodsEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductList.ProductEntity productEntity) {
+    public void setProductEntity(ProductList.ListStorageEntity.GoodsEntity productEntity) {
         this.productEntity = productEntity;
 
         //初始化ViewPager
@@ -173,12 +173,12 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         });
 
 
-        //设置文本信息
-        textProductNameValue.setText(productEntity.getGoodsName());
-        textProductIdValue.setText(productEntity.getGoodsId());
-        textOriginalPriceValue.setText("¥" + (productEntity.getPrice() + 20));
-        textProdGradeValue.setImageResource(R.mipmap.level_2);
-        textPriceValue.setText("¥" + productEntity.getPrice() + "");
+//        //设置文本信息
+//        textProductNameValue.setText(productEntity.getGoodsName());
+//        textProductIdValue.setText(productEntity.getGoodsId());
+//        textOriginalPriceValue.setText("¥" + (productEntity.getPrice() + 20));
+//        textProdGradeValue.setImageResource(R.mipmap.level_2);
+//        textPriceValue.setText("¥" + productEntity.getPrice() + "");
 
         textPutIntoShopcar.setOnClickListener(this);
         textProdToCollect.setOnClickListener(this);
