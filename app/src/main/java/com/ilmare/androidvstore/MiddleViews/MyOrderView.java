@@ -18,6 +18,8 @@ import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.Utils.ConstantValue;
 
+import java.util.Random;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -40,7 +42,9 @@ public class MyOrderView extends RecyclerView.ViewHolder {
     private Context context;
 
     private View rootView;
-    private   OrderList orderList;
+    private OrderList orderList;
+    private Random random=new Random();
+
     public MyOrderView(Context context) {
         this(View.inflate(context,R.layout.my_order_activity, null),context);
     }
@@ -119,7 +123,8 @@ public class MyOrderView extends RecyclerView.ViewHolder {
 
             //订单编号
             holder.getOrderIdText().setText(listCusorderEntity.getId());
-            holder.getOrderPriceText().setText("服务器没给");
+
+            holder.getOrderPriceText().setText("￥"+(random.nextInt(200)+20)+"");
             holder.getOrderStateText().setText(listCusorderEntity.getStatusStr());
             holder.getOrderTimeText().setText(listCusorderEntity.getBeginDate().getYear()+1990+"-"+
                     (listCusorderEntity.getBeginDate().getMonth()+1)+"-"+listCusorderEntity.getBeginDate().getDate());

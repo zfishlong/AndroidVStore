@@ -108,7 +108,7 @@ public class ProductList implements Serializable{
             private String type2;
             private List<?> listAdd;
             private List<?> listBrand;
-            private List<?> listPrice;
+            private List<Integer> listPrice;
             private List<?> listType1;
             private List<?> listType2;
             private String price;
@@ -169,7 +169,7 @@ public class ProductList implements Serializable{
                 this.listBrand = listBrand;
             }
 
-            public void setListPrice(List<?> listPrice) {
+            public void setListPrice(List<Integer> listPrice) {
                 this.listPrice = listPrice;
             }
 
@@ -229,7 +229,7 @@ public class ProductList implements Serializable{
                 return listBrand;
             }
 
-            public List<?> getListPrice() {
+            public List<Integer> getListPrice() {
                 return listPrice;
             }
 

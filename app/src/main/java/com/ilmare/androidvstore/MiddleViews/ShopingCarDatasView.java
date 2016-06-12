@@ -77,6 +77,8 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
     private View rootView;
 
     private ArrayList<ShopingCarItem> shopingCarItems;
+    private UserInfo userInfo=null;
+    private String priceType="1";
 
     public ShopingCarDatasView(Context context) {
         this(View.inflate(context, R.layout.payment_center_activity, null), context);
@@ -93,27 +95,39 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.MATCH_PARENT));
 
+        getCurrentUserInfo(context);
 
         showProducts();
 
         showMoney();
     }
 
+
+    private void getCurrentUserInfo(Context context) {
+        String currentUser = context.getSharedPreferences("config", Context.MODE_PRIVATE).getString("currentUser", "");
+        if(!TextUtils.isEmpty(currentUser)){
+            Gson gson=new Gson();
+            userInfo = gson.fromJson(currentUser, UserInfo.class);
+            priceType = userInfo.getListCus().get(0).getPriceTypeId();
+        }
+    }
+
     private void showMoney() {
 
-//        int countSum = 0;
-//        int priceSum = 0;
-//
-//        for (ShopingCarItem item : shopingCarItems) {
-//            countSum += item.getOrderNumber();
-////            priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
-//        }
-//
-//        paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
-//        shopcarTotalBuycountText.setText(countSum + " ");
-//        shopcarTotalMoneyText.setText("￥" + priceSum + "");
-//
-//        ordrSubmitBottomText.setOnClickListener(this);
+        int countSum = 0;
+        int priceSum = 0;
+
+        for (ShopingCarItem item : shopingCarItems) {
+             countSum += item.getOrderNumber();
+             priceSum += item.getOrderNumber() *
+                  item.getShopingCarItemProductEntity().getGoods().getListPrice()
+                             .get(Integer.parseInt(priceType)-1);
+        }
+
+        paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
+        shopcarTotalBuycountText.setText(countSum + " ");
+        shopcarTotalMoneyText.setText("￥" + priceSum + "");
+        ordrSubmitBottomText.setOnClickListener(this);
     }
 
 
@@ -126,7 +140,6 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
 
             ObjectInputStream inputStream = new ObjectInputStream(
                     new FileInputStream(file));
-
             shopingCarItems = (ArrayList<ShopingCarItem>)inputStream.readObject();
             System.out.println(shopingCarItems.size());
             paymentProductList.setAdapter(new MyShopingCarItemAdapter());
@@ -149,35 +162,12 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
     @Override
     public void onClick(View v) {
 
-
-        SharedPreferences sp=context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        String userJson=sp.getString("currentUser", "");
-
-        if(TextUtils.isEmpty(userJson)){
+        if(userInfo==null){
             MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
-        }else{
-            Gson gson=new Gson();
-            UserInfo info=gson.fromJson(userJson,UserInfo.class);
-//            for (ShopingCarItem item : shopingCarItems) {
-//                NetUtils.getJson(ConstantValue.MAKE_ORDER + "?cusId=" + info.getListCus().get(0).getCusId() + "&goodsId="+
-//                        item.getShopingCarItemProductEntity().getGoodsId()+"&num="+item.getOrderNumber(), new NetUtils.NetAccessListener() {
-//                    @Override
-//                    public void onSeccuss(String json) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String error) {
-//
-//                    }
-//                });
-//            }
-
-            Toast.makeText(context, "订单成功！", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-
-
+        Toast.makeText(context, "订单成功！", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -219,9 +209,9 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
             holder.getShopcarItemProdNameText().setText(item.getShopingCarItemProductEntity().getGoods().getGoodsName()); //商品名称
             holder.getShopcarItemProdIdText().setText(item.getShopingCarItemProductEntity().getGoods().getIsbn()); //商品编号
 
-//            holder.getShopcarItemProdPriceText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + "");//商品价格
-//            holder.getShopcarItemProdCountText().setText(item.getOrderNumber() + ""); //商品数量
-//            holder.getShopcarItemSubtotalText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + ""); //小计
+            holder.getShopcarItemProdPriceText().setText("￥" + item.getShopingCarItemProductEntity().getGoods().getListPrice().get(Integer.parseInt(priceType)-1) * item.getOrderNumber() + "");//商品价格
+            holder.getShopcarItemProdCountText().setText(item.getOrderNumber() + ""); //商品数量
+            holder.getShopcarItemSubtotalText().setText("￥" + item.getShopingCarItemProductEntity().getGoods().getListPrice().get(Integer.parseInt(priceType) - 1) * item.getOrderNumber() + ""); //小计
             return convertView;
         }
 
