@@ -59,7 +59,6 @@ public interface ConstantValue {
 	 * 服务器地址
 	 */
 	String URI = "http://www.ilmare.site/Shopping_ec";
-
 	String BASEURL="http://qdlgbs.java.cdnjsp.cn/";
 	String PRODUCTLISTINFO=BASEURL+"goodsShowManage_storageShow.action";  //商品信息
 	String MAKE_ORDER=BASEURL+"cusToOrderManage_handleCusOrder.action";  //下订单
