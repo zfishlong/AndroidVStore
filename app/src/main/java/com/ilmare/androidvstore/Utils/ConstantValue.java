@@ -65,7 +65,7 @@ public interface ConstantValue {
 	String MAKE_ORDER=BASEURL+"cusToOrderManage_handleCusOrder.action";  //下订单
 	String LISTPRICE=BASEURL+"goodsShowManage_getPrice.action"; //获取价格列表
 	String ORDER_LIST=BASEURL+"cusToOrderManage_getCusOrder.action"; //获取订单列表
-
+	String LOGIN=BASEURL+"cusLoginManage_loginCheck.action"; //获取订单列表
 
 	/**
 	 * 资源地址
@@ -77,17 +77,6 @@ public interface ConstantValue {
 	 */
 	String SERVERERROR = "error";
 
-	/**
-	 * 我的账户地址
-	 * 
-	 * @author zl
-	 */
-	String REGISTER = "/x_z_register.php";
-	String LOGIN = "/x_z_login.php";
-	String LOGOUT = "/x_z_logout.php";
-	String USERINFO = "/x_z_userinfo.php";
-
-	String BRAND = "/x_pinpai.php";
 
 	/**
 	 * 商品列表和详情

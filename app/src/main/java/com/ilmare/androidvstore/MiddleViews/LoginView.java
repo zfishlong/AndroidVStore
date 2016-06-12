@@ -103,7 +103,7 @@ public class LoginView extends RecyclerView.ViewHolder implements View.OnClickLi
                     return;
                 }
 
-                NetUtils.getJson("http://bishe.java.jspee.net/cusLoginManage_loginCheck.action?name=" + userName + "&pass=" + passWord, new NetUtils.NetAccessListener() {
+                NetUtils.getJson(ConstantValue.LOGIN+"?name=" + userName + "&pass=" + passWord, new NetUtils.NetAccessListener() {
                     @Override
                     public void onSeccuss(String json) {
                         if (json != null && !"".equals(json)) {
@@ -114,7 +114,6 @@ public class LoginView extends RecyclerView.ViewHolder implements View.OnClickLi
                             sp.edit().putString("currentUser",json).commit();
 
                             Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
-
                             MiddleViewManager.getInstance().changeView(ConstantValue.ACCOUNT_VIEW);
                         } else {
                             Toast.makeText(context, "用户名或密码不正确", Toast.LENGTH_SHORT).show();

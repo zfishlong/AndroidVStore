@@ -81,24 +81,16 @@ public class AccountView extends RecyclerView.ViewHolder implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.my_name_lin1:
-
-
                 MiddleViewManager.getInstance().changeView(ConstantValue.VIEW_ORDER_LIST);
                 Toast.makeText(context, "我的订单", Toast.LENGTH_SHORT).show();
-
-
-
                 break;
             case R.id.my_name_lin2:
-
                 Toast.makeText(context, "地址管理", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.my_name_lin3:
-
                 Toast.makeText(context, "优惠券/礼物卡", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.my_name_lin4:
-
                 Toast.makeText(context, "收藏夹", Toast.LENGTH_SHORT).show();
                 break;
         }

@@ -90,7 +90,6 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
                url=ConstantValue.PRODUCTLISTINFO;
                 getData(url);
                 break;
-
         }
 
 
@@ -100,6 +99,8 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
         textRankTime.setOnClickListener(this);
 
         productListView.setOnItemClickListener(this);
+
+
     }
 
 

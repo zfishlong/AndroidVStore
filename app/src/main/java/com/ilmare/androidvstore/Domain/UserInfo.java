@@ -11,14 +11,15 @@ import java.util.List;
  */
 public class UserInfo {
 
-
     /**
-     * cusAddress : 山东省菏泽市
-     * cusId : AA4B9F6F8838483EACC518EB5A227FC8
-     * cusName : LZY
+     * cusAddress : 山东省青岛市
+     * cusId : 4C83FEBD5BC240AC88461ADF395266DE
+     * cusName : HHH
      * cusPasswd : 1111
-     * remark :
-     * tel : 11111
+     * priceTypeId : 2
+     * priceTypeName : 一级代理
+     * remark : 是个都比
+     * tel : 11221
      */
 
     private List<ListCusEntity> listCus;
@@ -31,34 +32,15 @@ public class UserInfo {
         return listCus;
     }
 
-
-    @Override
-    public String toString() {
-        return "UserInfo{" +
-                "listCus=" + listCus +
-                '}';
-    }
-
     public static class ListCusEntity {
         private String cusAddress;
         private String cusId;
         private String cusName;
         private String cusPasswd;
+        private String priceTypeId;
+        private String priceTypeName;
         private String remark;
         private String tel;
-
-
-        @Override
-        public String toString() {
-            return "ListCusEntity{" +
-                    "cusAddress='" + cusAddress + '\'' +
-                    ", cusId='" + cusId + '\'' +
-                    ", cusName='" + cusName + '\'' +
-                    ", cusPasswd='" + cusPasswd + '\'' +
-                    ", remark='" + remark + '\'' +
-                    ", tel='" + tel + '\'' +
-                    '}';
-        }
 
         public void setCusAddress(String cusAddress) {
             this.cusAddress = cusAddress;
@@ -74,6 +56,14 @@ public class UserInfo {
 
         public void setCusPasswd(String cusPasswd) {
             this.cusPasswd = cusPasswd;
+        }
+
+        public void setPriceTypeId(String priceTypeId) {
+            this.priceTypeId = priceTypeId;
+        }
+
+        public void setPriceTypeName(String priceTypeName) {
+            this.priceTypeName = priceTypeName;
         }
 
         public void setRemark(String remark) {
@@ -98,6 +88,14 @@ public class UserInfo {
 
         public String getCusPasswd() {
             return cusPasswd;
+        }
+
+        public String getPriceTypeId() {
+            return priceTypeId;
+        }
+
+        public String getPriceTypeName() {
+            return priceTypeName;
         }
 
         public String getRemark() {
