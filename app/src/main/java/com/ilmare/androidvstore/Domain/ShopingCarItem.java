@@ -15,16 +15,16 @@ import java.util.ArrayList;
 
 public class ShopingCarItem implements Serializable {
 
-    private ProductList.ListStorageEntity.GoodsEntity shopingCarItemProductEntity;
+    private ProductList.ListStorageEntity shopingCarItemProductEntity;
 
     private int orderNumber;
 
 
-    public ProductList.ListStorageEntity.GoodsEntity getShopingCarItemProductEntity() {
+    public ProductList.ListStorageEntity getShopingCarItemProductEntity() {
         return shopingCarItemProductEntity;
     }
 
-    public void setShopingCarItemProductEntity(ProductList.ListStorageEntity.GoodsEntity shopingCarItemProductEntity) {
+    public void setShopingCarItemProductEntity(ProductList.ListStorageEntity shopingCarItemProductEntity) {
         this.shopingCarItemProductEntity = shopingCarItemProductEntity;
     }
 

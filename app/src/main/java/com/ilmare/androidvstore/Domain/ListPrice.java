@@ -13,9 +13,7 @@ import java.util.List;
  * 描述：
  * ===============================
  */
-
 public class ListPrice implements Serializable{
-
     /**
      * id : 04D2EB04DF274451834F12952A3B6281
      * isbn : 720DD3366F374F16B5AE46F571CD7C4C
@@ -23,7 +21,6 @@ public class ListPrice implements Serializable{
      * priceType : null
      * pricetypeid : 1
      */
-
     private List<ListPriceEntity> listPrice;
 
     public void setListPrice(List<ListPriceEntity> listPrice) {
@@ -34,7 +31,7 @@ public class ListPrice implements Serializable{
         return listPrice;
     }
 
-    public static class ListPriceEntity {
+    public static class ListPriceEntity implements Serializable{
         private String id;
         private String isbn;
         private int price;

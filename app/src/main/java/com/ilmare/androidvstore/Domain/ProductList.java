@@ -30,7 +30,7 @@ public class ProductList implements Serializable{
         return listStorage;
     }
 
-    public static class ListStorageEntity {
+    public static class ListStorageEntity implements Serializable {
         /**
          * address : 中国山东
          * bid : 11
@@ -95,7 +95,7 @@ public class ProductList implements Serializable{
             return storageNum;
         }
 
-        public static class GoodsEntity {
+        public static class GoodsEntity implements Serializable {
             private String address;
             private int bid;
             private String brand;

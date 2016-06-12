@@ -146,7 +146,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         textProductIdValue.setText(productEntity.getGoods().getIsbn());
         textOriginalPriceValue.setText("¥"+productEntity.getGoods().getListPrice().get(0));
         textProdGradeValue.setImageResource(R.mipmap.level_2);
-        textPriceValue.setText("¥"+productEntity.getGoods().getListPrice().get(1));
+        textPriceValue.setText("¥" + productEntity.getGoods().getListPrice().get(1));
 
         textPutIntoShopcar.setOnClickListener(this);
         textProdToCollect.setOnClickListener(this);
@@ -177,12 +177,9 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
                     return;
                 }
 
-
                 ShopingCarItem shopingCarItem = new ShopingCarItem();
-//                shopingCarItem.setShopingCarItemProductEntity(productEntity);
+                shopingCarItem.setShopingCarItemProductEntity(productEntity);
                 shopingCarItem.setOrderNumber(Integer.parseInt(prodNumValue.getText().toString()));
-
-
 
                 shopingCar.setShoppingItem(shopingCarItem);
                 File file=new File(context.getCacheDir(), "a.txt");
@@ -202,11 +199,9 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
                 }
                 
                 Toast.makeText(context, "加入购物车", Toast.LENGTH_SHORT).show();
-
                 break;
             case R.id.textProdToCollect:
                 Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
-
                 //TODO 真的收藏
                 break;
         }

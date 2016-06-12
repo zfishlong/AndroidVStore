@@ -4,14 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +16,6 @@ import com.google.gson.Gson;
 import com.ilmare.androidvstore.Domain.ShopingCarItem;
 import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.Holder.PaymentCenterItemsHolder;
-import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
@@ -27,10 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -108,19 +101,19 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
 
     private void showMoney() {
 
-        int countSum = 0;
-        int priceSum = 0;
-
-        for (ShopingCarItem item : shopingCarItems) {
-            countSum += item.getOrderNumber();
-//            priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
-        }
-
-        paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
-        shopcarTotalBuycountText.setText(countSum + " ");
-        shopcarTotalMoneyText.setText("￥" + priceSum + "");
-
-        ordrSubmitBottomText.setOnClickListener(this);
+//        int countSum = 0;
+//        int priceSum = 0;
+//
+//        for (ShopingCarItem item : shopingCarItems) {
+//            countSum += item.getOrderNumber();
+////            priceSum += item.getOrderNumber() * item.getShopingCarItemProductEntity().getPrice();
+//        }
+//
+//        paymentOrderPriceText.setText("您共需为订单支付：￥" + priceSum);
+//        shopcarTotalBuycountText.setText(countSum + " ");
+//        shopcarTotalMoneyText.setText("￥" + priceSum + "");
+//
+//        ordrSubmitBottomText.setOnClickListener(this);
     }
 
 
@@ -222,10 +215,10 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
             ShopingCarItem item = shopingCarItems.get(position);
 
 
-            Picasso.with(context).load(ConstantValue.BASEURL + item.getShopingCarItemProductEntity().getPicPath()).fit().into(holder.getShopcarItemProdImageImg());//图片
-//
-//            holder.getShopcarItemProdNameText().setText(item.getShopingCarItemProductEntity().getGoodsName()); //商品名称
-//            holder.getShopcarItemProdIdText().setText(item.getShopingCarItemProductEntity().getGoodsId()); //商品编号
+            Picasso.with(context).load(ConstantValue.BASEURL + item.getShopingCarItemProductEntity().getGoods().getPicPath()).fit().into(holder.getShopcarItemProdImageImg());//图片
+            holder.getShopcarItemProdNameText().setText(item.getShopingCarItemProductEntity().getGoods().getGoodsName()); //商品名称
+            holder.getShopcarItemProdIdText().setText(item.getShopingCarItemProductEntity().getGoods().getIsbn()); //商品编号
+
 //            holder.getShopcarItemProdPriceText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + "");//商品价格
 //            holder.getShopcarItemProdCountText().setText(item.getOrderNumber() + ""); //商品数量
 //            holder.getShopcarItemSubtotalText().setText("￥" + item.getShopingCarItemProductEntity().getPrice() * item.getOrderNumber() + ""); //小计
