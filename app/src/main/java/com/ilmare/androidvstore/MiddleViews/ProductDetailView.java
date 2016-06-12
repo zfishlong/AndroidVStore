@@ -49,56 +49,26 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
     ViewPager productViewPager;
     @InjectView(R.id.imgPoint)
     LinearLayout imgPoint;
-    @InjectView(R.id.textProductName)
-    TextView textProductName;
+
     @InjectView(R.id.textProductNameValue)
     TextView textProductNameValue;
-    @InjectView(R.id.textProductId)
-    TextView textProductId;
+
     @InjectView(R.id.textProductIdValue)
     TextView textProductIdValue;
-    @InjectView(R.id.priceLayout)
-    RelativeLayout priceLayout;
-    @InjectView(R.id.textOriginalPrice)
-    TextView textOriginalPrice;
+
     @InjectView(R.id.textOriginalPriceValue)
     TextView textOriginalPriceValue;
-    @InjectView(R.id.textProdGrade)
-    TextView textProdGrade;
+
     @InjectView(R.id.textProdGradeValue)
     ImageView textProdGradeValue;
-    @InjectView(R.id.textPrice)
-    TextView textPrice;
+
     @InjectView(R.id.textPriceValue)
     TextView textPriceValue;
-    @InjectView(R.id.textProdNum)
-    TextView textProdNum;
+
     @InjectView(R.id.prodNumValue)
     EditText prodNumValue;
-    @InjectView(R.id.prod_property)
-    RelativeLayout prodProperty;
-    @InjectView(R.id.textColor)
-    TextView textColor;
-    @InjectView(R.id.textColorValue)
-    TextView textColorValue;
-    @InjectView(R.id.textSize)
-    TextView textSize;
-    @InjectView(R.id.textSizeValue)
-    TextView textSizeValue;
-    @InjectView(R.id.relDescription)
-    RelativeLayout relDescription;
-    @InjectView(R.id.relProdStock)
-    RelativeLayout relProdStock;
-    @InjectView(R.id.textLookProdStock)
-    TextView textLookProdStock;
-    @InjectView(R.id.textProdIsStock)
-    TextView textProdIsStock;
-    @InjectView(R.id.relProductComment)
-    RelativeLayout relProductComment;
-    @InjectView(R.id.textProductComment)
-    TextView textProductComment;
-    @InjectView(R.id.textProductCommentNum)
-    TextView textProductCommentNum;
+
+
     @InjectView(R.id.textPutIntoShopcar)
     TextView textPutIntoShopcar;
     @InjectView(R.id.textProdToCollect)
@@ -108,7 +78,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
     private View rootView;
 
     private int lastPosition = 0;
-    private ProductList.ListStorageEntity.GoodsEntity productEntity;
+    private ProductList.ListStorageEntity productEntity;
 
     private ShopingCar shopingCar=new ShopingCar();
 
@@ -126,8 +96,6 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.MATCH_PARENT));
 
-
-//
     }
 
 
@@ -139,11 +107,11 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         this.rootView = rootView;
     }
 
-    public ProductList.ListStorageEntity.GoodsEntity getProductEntity() {
+    public ProductList.ListStorageEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductList.ListStorageEntity.GoodsEntity productEntity) {
+    public void setProductEntity(ProductList.ListStorageEntity productEntity) {
         this.productEntity = productEntity;
 
         //初始化ViewPager
@@ -173,12 +141,12 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         });
 
 
-//        //设置文本信息
-//        textProductNameValue.setText(productEntity.getGoodsName());
-//        textProductIdValue.setText(productEntity.getGoodsId());
-//        textOriginalPriceValue.setText("¥" + (productEntity.getPrice() + 20));
-//        textProdGradeValue.setImageResource(R.mipmap.level_2);
-//        textPriceValue.setText("¥" + productEntity.getPrice() + "");
+        //设置文本信息
+        textProductNameValue.setText(productEntity.getGoods().getGoodsName());
+        textProductIdValue.setText(productEntity.getGoods().getIsbn());
+        textOriginalPriceValue.setText("¥"+productEntity.getGoods().getListPrice().get(0));
+        textProdGradeValue.setImageResource(R.mipmap.level_2);
+        textPriceValue.setText("¥"+productEntity.getGoods().getListPrice().get(1));
 
         textPutIntoShopcar.setOnClickListener(this);
         textProdToCollect.setOnClickListener(this);
@@ -211,7 +179,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
 
 
                 ShopingCarItem shopingCarItem = new ShopingCarItem();
-                shopingCarItem.setShopingCarItemProductEntity(productEntity);
+//                shopingCarItem.setShopingCarItemProductEntity(productEntity);
                 shopingCarItem.setOrderNumber(Integer.parseInt(prodNumValue.getText().toString()));
 
 
@@ -260,7 +228,7 @@ public class ProductDetailView extends RecyclerView.ViewHolder implements View.O
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(context);
-            Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getPicPath()).fit().into(imageView);
+            Picasso.with(context).load(ConstantValue.BASEURL + productEntity.getGoods().getPicPath()).fit().into(imageView);
             container.addView(imageView);
             return imageView;
         }

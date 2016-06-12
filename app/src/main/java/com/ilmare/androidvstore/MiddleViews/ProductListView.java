@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.ilmare.androidvstore.Beans.Product;
 import com.ilmare.androidvstore.Domain.ListPrice;
 import com.ilmare.androidvstore.Domain.ProductList;
 import com.ilmare.androidvstore.Domain.UserInfo;
@@ -104,6 +105,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
         productListView.setOnItemClickListener(this);
 
+        //获取登录的用户信息
         String currentUser = context.getSharedPreferences("config", Context.MODE_PRIVATE).getString("currentUser", "");
         if(!TextUtils.isEmpty(currentUser)){
             Gson gson=new Gson();
@@ -111,35 +113,10 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
             priceType=userInfo.getListCus().get(0).getPriceTypeId();
         }
 
+
     }
-
-
-
-    private void getData2(String url) {
-        //初始化的操作
-        NetUtils.getJson(url, new NetUtils.NetAccessListener() {
-            @Override
-            public void onSeccuss(String json) {
-                Gson gson = new Gson();
-
-                productList = gson.fromJson(json, ProductList.class);
-                adapter = new MyProductListAdapter();
-
-                productListView.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onFailed(String error) {
-
-            }
-        });
-    }
-
-
 
     private void getData(final String url) {
-
         NetUtils.getJson(ConstantValue.LISTPRICE, new NetUtils.NetAccessListener() {
             @Override
             public void onSeccuss(String json) {
@@ -168,12 +145,6 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
 
             }
         });
-
-
-
-
-
-
     }
 
     private void initTextView() {
@@ -190,9 +161,7 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
             case R.id.textRankSale:
                 textRankSale
                         .setBackgroundResource(R.mipmap.segment_selected_1_bg);
-
                 //TODO 请求网络  更新列表
-
                 break;
             case R.id.textRankPrice:
 
@@ -218,14 +187,14 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//        ProductList.ProductEntity productEntity = productList.getListGoods().get(position);
-//        MiddleViewManager.getInstance().setDataToNextView(productEntity);
-//        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_DETAIL_VIEW);
-
+        ProductList.ListStorageEntity listStorageEntity = productList.getListStorage().get(position);
+        listStorageEntity.getGoods().setListPrice(listPrice.getPricesByISBN(listStorageEntity.getGoods().getIsbn()));
+        MiddleViewManager.getInstance().setDataToNextView(listStorageEntity);
+        MiddleViewManager.getInstance().changeView(ConstantValue.PRODUCT_DETAIL_VIEW);
 
     }
 
-
+    //适配器
     private class MyProductListAdapter extends BaseAdapter {
 
         @Override
@@ -250,26 +219,15 @@ public class ProductListView extends RecyclerView.ViewHolder implements View.OnC
                 convertView = View.inflate(context, R.layout.product_list_items, null);
                 holder = new ProductListItemsHolder(convertView);
                 convertView.setTag(holder);
-
             } else {
                 holder = (ProductListItemsHolder) convertView.getTag();
             }
-
             ProductList.ListStorageEntity listStorageEntity = productList.getListStorage().get(position);
             ProductList.ListStorageEntity.GoodsEntity goodsEntity=listStorageEntity.getGoods();
-
-
             holder.getTextClothesName().setText(goodsEntity.getGoodsName());//商品名称
-
-
-            holder.getTextClothesPrice().setText("￥"+listPrice.getPriceByPriceTypeIdAndISBN(priceType,goodsEntity.getIsbn()));//商品价格
-
+            holder.getTextClothesPrice().setText("￥"+listPrice.getPriceByPriceTypeIdAndISBN(priceType, goodsEntity.getIsbn()));//商品价格
             holder.getTextMarketPrice().setText("库存量：" + listStorageEntity.getStorageNum());//原价
-
-            System.out.println(ConstantValue.BASEURL+ goodsEntity.getPicPath());
-
             Picasso.with(context).load(ConstantValue.BASEURL + goodsEntity.getPicPath()).fit().into(holder.getGoodsIconIv());
-
             return convertView;
         }
     }

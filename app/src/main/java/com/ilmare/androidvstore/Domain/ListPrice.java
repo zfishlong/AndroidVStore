@@ -1,6 +1,7 @@
 package com.ilmare.androidvstore.Domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,5 +90,15 @@ public class ListPrice implements Serializable{
             }
         }
         return -1;
+    }
+
+    public List<Integer> getPricesByISBN(String isbn){
+        List<Integer> prices=new ArrayList<>();
+        for (ListPriceEntity listPriceEntity : listPrice) {
+            if(listPriceEntity.getIsbn().equals(isbn)){
+                prices.add(listPriceEntity.getPrice());
+            }
+        }
+        return prices;
     }
 }

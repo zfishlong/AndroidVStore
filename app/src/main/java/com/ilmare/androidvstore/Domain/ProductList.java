@@ -111,6 +111,15 @@ public class ProductList implements Serializable{
             private List<?> listPrice;
             private List<?> listType1;
             private List<?> listType2;
+            private String price;
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
 
             public void setAddress(String address) {
                 this.address = address;
