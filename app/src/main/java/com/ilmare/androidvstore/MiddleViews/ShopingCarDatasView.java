@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.ilmare.androidvstore.Domain.ShopingCarItem;
 import com.ilmare.androidvstore.Domain.UserInfo;
 import com.ilmare.androidvstore.Holder.PaymentCenterItemsHolder;
+import com.ilmare.androidvstore.Net.NetUtils;
 import com.ilmare.androidvstore.R;
 import com.ilmare.androidvstore.UIManager.MiddleViewManager;
 import com.ilmare.androidvstore.Utils.ConstantValue;
@@ -165,6 +166,23 @@ public class ShopingCarDatasView extends RecyclerView.ViewHolder implements View
         if(userInfo==null){
             MiddleViewManager.getInstance().changeView(ConstantValue.LOGIN_VIEW);
             return;
+        }
+
+
+
+        for (ShopingCarItem item : shopingCarItems) {
+            NetUtils.getJson(ConstantValue.MAKE_ORDER + "?cusId=" + userInfo.getListCus().get(0).getCusId() + "&isbn=" +
+                    item.getShopingCarItemProductEntity().getGoods().getIsbn() + "&num=" + item.getOrderNumber(), new NetUtils.NetAccessListener() {
+                @Override
+                public void onSeccuss(String json) {
+
+                }
+
+                @Override
+                public void onFailed(String error) {
+
+                }
+            });
         }
 
         Toast.makeText(context, "订单成功！", Toast.LENGTH_SHORT).show();
